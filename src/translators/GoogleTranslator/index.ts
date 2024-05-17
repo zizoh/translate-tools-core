@@ -44,6 +44,10 @@ export const supportedLanguages = [
 ];
 // eslint-enable
 
+const removeTrailingPunctuation = (text: string) => {
+	return text.replace(/[.!?]$/, '');
+};
+
 const parseXMLResponse = (text: string) => {
 	let doc: Document;
 	try {
@@ -57,7 +61,7 @@ const parseXMLResponse = (text: string) => {
 
 	if (nodesWithTranslation.length === 0) return null;
 	// console.log('Selected nodes', nodesWithTranslation.map((node) => (node as Node).toString()));
-	return nodesWithTranslation
+	const parsedText = nodesWithTranslation
 		.map((node) => {
 			// Select text in child nodes or in self
 			const textNodes = xpath.select('descendant-or-self::*/text()', node as Node);
@@ -68,6 +72,7 @@ const parseXMLResponse = (text: string) => {
 			return textNodes.length === 0 ? '' : textNodes.join(' ');
 		})
 		.join(' ');
+	return removeTrailingPunctuation(parsedText);
 };
 
 /**
