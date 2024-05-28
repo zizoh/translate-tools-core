@@ -1,10 +1,18 @@
 import {
 	isLanguageCodeISO639v1,
 	isLanguageCodeISO639v2,
+	isLanguageCodeISO639v1OrChinese,
 	getLanguageCodesISO639,
 } from '.';
 
 describe('isLanguageCodeISO639v2', () => {
+	test('chinese langCodes are valid', () => {
+		['zh-CN', 'zh-TW'].every((lang) => {
+			const result = isLanguageCodeISO639v1OrChinese(lang);
+			expect(result).toBe(true);
+		});
+	});
+
 	test('v1 langCodes are valid', () => {
 		getLanguageCodesISO639('v1').every((lang) => {
 			const result = isLanguageCodeISO639v1(lang);
