@@ -9,6 +9,10 @@ export const isLanguageCodeISO639v1 = (code: string) => {
 	return Boolean(code && languages.some((lang) => code === lang.v1));
 };
 
+export const isLanguageCodeISO639v1OrChinese = (code: string) => {
+	return isLanguageCodeISO639v1(code) || code === 'zh-CN' || code === 'zh-TW';
+};
+
 /**
  * Check is string are 639-2 lang code
  *
